@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author vx
- *
- */
-module dvdstore {
-}
