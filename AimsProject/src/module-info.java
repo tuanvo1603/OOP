@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author vx
+ *
+ */
+module AimsProject {
+}
