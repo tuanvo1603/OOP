@@ -1,22 +1,16 @@
 package hust.soict.dsai.aims.cart;
 
-import hust.soict.dsai.aims.disc.DVD;
+import java.util.ArrayList;
+import java.util.List;
+
+import hust.soict.dsai.aims.media.Media;
 
 public class Cart {
 	private static final int MAX_NUMBERS_ORDERED = 20;
 	private static final boolean TRUE = false;
-	private int qtyOrdered = 0;
-	private DVD itemsOrdered[] = new DVD[MAX_NUMBERS_ORDERED];
-
-	public void addDVD(DVD disc) {
-		if (qtyOrdered == MAX_NUMBERS_ORDERED) {
-			System.out.println("Your cart is full.");
-		} else {
-			itemsOrdered[qtyOrdered] = disc;
-			qtyOrdered += 1;
-			System.out.println("The disc " + disc.getTitle() + " has been added.");
-		}
-	}
+	private ArrayList<Media> itemOrdered = new ArrayList<Media>();
+	
+	
 	
 //	public void addDVD(DVD[] DVDlist ) {
 //		for(DVD dvd: DVDlist) {
@@ -24,45 +18,10 @@ public class Cart {
 //		}
 //	}
 	
-	public void addDVD(DVD... disc) {
-		addDVD(disc);
-	}
-	
-	public void addDVD(DVD disc1, DVD disc2) {
-		if(MAX_NUMBERS_ORDERED - qtyOrdered >= 2) {
-			itemsOrdered[qtyOrdered] = disc1;
-			qtyOrdered += 1;
-			itemsOrdered[qtyOrdered + 1] = disc2;
-			System.out.println("The disc " + disc1.getTitle() + disc2.getTitle() + "has been added");
-		}else {
-			if(MAX_NUMBERS_ORDERED - qtyOrdered == 1) System.out.println("Failture for adding. You only have 1 place in your cart");
-			else System.out.println("Failture for adding. Your cart is full");
-		}
-	}
-
-	public void removeDVD(DVD disc) {
-		boolean check = false;
-
-		for (int i = 0; i < qtyOrdered; i++) {
-			if (itemsOrdered[i] == disc) {
-				for (int j = i; j < qtyOrdered; j++) {
-					itemsOrdered[j] = itemsOrdered[j + 1];
-				}
-				qtyOrdered -= 1;
-				System.out.println("The disc " + disc.getTitle() + " has been deleted.");
-				check = true;
-				break;
-			}
-		}
-		if (!check) {
-			System.out.println("The disc " + disc.getTitle() + " has been found in your cart.");
-		}
-	}
-
 	public float totalCost() {
 		float total = 0;
-		for (int i = 0; i < qtyOrdered; i++) {
-			total = total + itemsOrdered[i].getCost();
+		for (int i = 0; i < itemOrdered.size(); i++) {
+			total = total + itemOrdered.get(i).cost;
 		}
 		return total;
 	}
@@ -70,16 +29,16 @@ public class Cart {
 	public void showOrder() {
 		System.out.println("*********************CART**********************");
 		System.out.println("Odered Items:");
-		for(int i=0; i<qtyOrdered; i++) {
-			System.out.println((i+1) + "." + itemsOrdered[i].getTitle() + "-" + itemsOrdered[i].getCategory() +"-" + itemsOrdered[i].getDirector() + "-" + itemsOrdered[i].getLength() + "-" + itemsOrdered[i].getCost());
+		for(int i=0; i<itemOrdered.size(); i++) {
+			System.out.println((i+1) + "." + itemOrdered.get(i).title + "-" + itemOrdered.get(i).category +"-" + itemOrdered.get(i).cost);
 		}
 		System.out.println("Total cost:" + totalCost());
 		System.out.println("************************************************");
 	}
 	
 	public boolean isMatch(String title) {
-		for(int i=0; i<qtyOrdered; i++) {
-			if(itemsOrdered[i].getTitle().equals(title)) {
+		for(int i=0; i<itemOrdered.size(); i++) {
+			if(itemOrdered.get(i).equals(title)) {
 				return true;
 			}
 		}
@@ -87,13 +46,48 @@ public class Cart {
 	}
 	
 	public boolean isMatch(int id) {
-		for(int i=0; i<qtyOrdered; i++) {
-			if(itemsOrdered[i].getId() == id) {
+		for(int i=0; i<itemOrdered.size(); i++) {
+			if(itemOrdered.get(i).id == id) {
 				return true;
 			}
 		}
 		return false;
 	}
+	
+	public void addMedia(Media media) {
+		for(int i=0; i<itemOrdered.size(); i++) {
+			if(itemOrdered.contains(media)) {
+				System.out.println("Media is existed!");
+				break;
+			}
+			
+			itemOrdered.add(media);
+			System.out.println("Successfully added!");
+		}
+	}
+	
+	public void removeMedia(Media media) {
+		for(int i=0; i<itemOrdered.size(); i++) {
+			if(itemOrdered.contains(media)) {
+				itemOrdered.remove(i);
+				System.out.println("Successfully removed!");
+				break;
+			}
+			
+			System.out.println("Media is not existed!");
+		}
+	}
+
+	public ArrayList<Media> getItemOrdered() {
+		return itemOrdered;
+	}
+
+	public List<Media> getListItemOrdered() {
+		return (List) itemOrdered;
+	}
+	
+	
+	
 }
 
 
