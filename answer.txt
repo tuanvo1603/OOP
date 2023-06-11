@@ -1,0 +1,10 @@
+- The Media class should implement the Comparable interface.
+- public class Media implements Comparable<Media> {
+
+    @Override
+    public int compareTo(Media other) {
+        return this.title.compareTo(other.title);
+    }
+}
+- No, if we're using the `Comparable` interface approach, we can only have one ordering rule for the item. If you need to have multiple ordering rules, you can implement multiple sorting methods in a comparable class based on multiple criteria. For example, you can implement two `compareTo` methods, `compareToByTitleCost` and `compareToByCostTitle`, to sort based on different criteria.
+- To allow DVDs to have a different ordering rule, you can create a subclass of `Media` specifically for DVDs, and have it implement the `Comparable` interface with its own implementation of the `compareTo` method based on the special ordering rules for DVDs.
